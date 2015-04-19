@@ -1,0 +1,38 @@
+<template name="createGame">
+    <div class="ui page grid">
+        <div class="ui eight wide column">
+            <form class="ui form">
+                <h4 class="ui dividing header">Create New Game</h4>
+                <div class="two fields">
+                    <div class="field">
+                        <label>Number of Players</label>
+                        <div class="ui selection dropdown">
+                            <i class="user icon"></i>
+                            <input type="hidden" id="numPlayers">
+                            <div class="default text">Number of players</div>
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <div class="item" data-value="2">2</div>
+                                <div class="item" data-value="3">3</div>
+                                <div class="item" data-value="4">4</div>
+                                <div class="item" data-value="5">5</div>
+                                <div class="item" data-value="6">6</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field"></div>
+                </div>
+                <h4 class="ui dividing header">Optional Rules</h4>
+                <h5 class="ui header">The Unspellable Oath</h5>
+                <div class="field">
+                    <div class="ui toggle checkbox">
+                        <input type="radio" id="oathOption">
+                        <label>A player with only one life left may be allowed to make any word out of any number of letters and score for it (still rolling a check to keep their last life), whether or not it is gibberish.</label>
+                    </div>
+                </div>
+                <div style="height: 20px;"></div>
+                <div id="createGame" class="ui positive submit button"><i class="plus icon"></i>Create Game</div>
+            </form>
+        </div>
+    </div>
+</template>

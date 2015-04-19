@@ -1,0 +1,161 @@
+<template name="game">
+    <div class="ui grid">
+        <div class="ui three wide column" style="padding-left: 20px;">
+            <div class="ui cards">
+                <div class="card">
+                    <div class="content">
+                        <div class="header">
+                            <div class="image">
+                                <img width=50 height=50 src="{{identicon _id}}">
+                            </div>
+                            Game #{{_id}}</div>
+                        <div class="description">
+                            {{options}}
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <span>
+                            <i class="user icon"></i>
+                            {{numPlayers}}/{{numSeats}} Players
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="ui one wide column"></div>
+        <div class="ui eleven wide column">
+            <div class="ui grid">
+
+                <div class="ui twelve wide column">
+
+                    <div class="ui row">
+                        <div class="ui column">
+                            <div class="ui link cards">
+                                {{#each players}}
+                                    {{> gamePlayer}}
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui row">
+                        <div class="ui grid">
+                            <div class="ui row">
+                                {{> handLetters}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui divider"></div>
+                    {{#if isPlaying}}
+                        <div class="ui row">
+                            <form id="wordForm" class="ui form">
+                                <div class="ui grid">
+                                    <div class="ui row">
+                                        <div class="ui eight wide column">
+                                            <div class="ui right labeled massive input">
+                                                <input id="word" class="{{#if validCandidate}}valid{{else}}invalid{{/if}}" type="text" placeholder="Enter Word" autofocus="autofocus">
+                                                <div class="ui label">
+                                                    {{candidateScore}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{#if myTurn}}
+                                            <div class="ui eight wide column">
+                                                <div class="ui huge buttons">
+                                                    <button type="submit" id="submitWord" class="ui positive button">Play</button>
+                                                    <div class="or"></div>
+                                                    <div id="discardHand" class="ui negative button">Discard Hand</div>
+                                                </div>
+                                            </div>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="ui divider"></div>
+                    {{/if}}
+                    {{> chat}}
+                </div>
+
+                <div class="ui four wide column">
+                    <div class="ui small feed">
+                        <h4 class="ui header">Game Log</h4>
+                        {{#each log}}
+                            <div class="event">
+
+                                <div class="content">
+                                    <div class="date" title="{{formatTime timestamp}}">
+                                        {{fromNow timestamp}}
+                                    </div>
+                                    <div class="summary">
+                                        {{message}}
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="gamePlayer">
+    <div class="card {{#if thisPlayersTurn}}currentPlayer{{/if}} {{#if isSittingHere}}me{{/if}}">
+        <div class="content">
+            <div class="header">
+                #{{seatNumber}}
+                <br/>
+                {{#if isSittingHere}}
+                    <div class="ui mini left floated image">
+                        <img id="icon{{userId}}" width=25 height=25 src="{{identicon userId}}">
+                    </div>
+                    YOU!
+                {{else}}
+                    {{#if userId}}
+                        <div class="ui mini left floated image">
+                            <img id="icon{{userId}}" width=25 height=25 src="{{identicon userId}}">
+                        </div>
+                        #{{userId}}
+                    {{else}}
+                        No One Sitting Here!
+                    {{/if}}
+                {{/if}}
+
+            </div>
+        </div>
+        <div class="extra content">
+            <span class="right floated">
+                Score: {{score}}
+            </span>
+            {{#each totemIcons}}
+                <span><i {{this}}></i></span>
+            {{/each}}
+            <span>{{totems}} Lives</span>
+        </div>
+        {{#if isSittingHere}}
+            <a id="leaveGame" class="ui bottom attached button">
+                <i class="subtract icon"></i>
+                Leave Game
+            </a>
+        {{/if}}
+        {{#if canSitHere}}
+            <a id="sitHere" class="ui bottom attached button">
+                <i class="add icon"></i>
+                Sit Here
+            </a>
+        {{/if}}
+    </div>
+</template>
+
+<template name="handLetters">
+    {{#each myHand}}
+        <div class="ui two wide column">
+            <div class="ui segment">
+                <h1 class="ui header">{{letter}}<sub>{{value}}</sub></h1>
+            </div>
+        </div>
+    {{/each}}
+</template>

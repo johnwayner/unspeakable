@@ -1,0 +1,23 @@
+/* CSS declarations go here */
+
+div.card.currentPlayer
+{
+    box-shadow: 0 0 50px #f00 !important;
+}
+
+div.card.currentPlayer.me
+{
+    box-shadow: 0 0 20px #0f0 !important;
+}
+
+#word.valid {
+    background-color: lightgreen;
+}
+
+#word.invalid {
+    background-color: lightpink;
+}
+
+.comment.highlight {
+    background-color: yellow !important;
+}

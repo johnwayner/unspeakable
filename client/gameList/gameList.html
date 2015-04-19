@@ -1,0 +1,39 @@
+<template name="gameList">
+    <a href="/createGame/" id="createGame" class="ui button">
+        <i class="plus icon"></i>Create New Game
+    </a>
+    <div class="ui center aligned page grid">
+        <div class="ui column">
+            <div class="ui cards">
+              {{#each games}}
+                {{> gameSummary}}
+              {{/each}}
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="gameSummary">
+    <div class="card">
+        <div class="content">
+            <div class="header">
+                <div class="image">
+                    <img width=50 height=50 src="{{identicon _id}}">
+                </div>
+                Game #{{_id}}</div>
+            <div class="description">
+                {{options}}
+            </div>
+        </div>
+        <div class="extra content">
+            <span>
+                <i class="user icon"></i>
+                {{numPlayers}}/{{numSeats}} Players
+            </span>
+        </div>
+        <a class="ui bottom attached button" href="/game/{{_id}}">
+            <i class="add icon"></i>
+            View Game
+        </a>
+    </div>
+</template> 
