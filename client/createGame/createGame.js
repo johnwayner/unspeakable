@@ -4,7 +4,7 @@
 
 Template.createGame.events({
     'click #createGame': function(event, template) {
-        Meteor.call('createGame', template.$('#numPlayers').val(), template.$('#oathOption').val(), function(error, result) {
+        Meteor.call('createGame', template.$('#numPlayers').val(), template.$('#oathOption').prop('checked'), function(error, result) {
             if(!error) {
                 Router.go('/game/' + result);
             }
