@@ -83,6 +83,16 @@ Template.handLetters.helpers({
     }
 });
 
+Template.handLetters.events({
+    'click #letter': function(event, template) {
+        var wordInput = $('#word');
+        var word = wordInput.val() + this.letter;
+        wordInput.val(word);
+        Session.set('candidate', word);
+        Session.set('candidateScore', Game.scoreWord(word));
+    }
+});
+
 Template.gamePlayer.helpers({
     'thisPlayersTurn': function() {
         var currentPlayer = Template.parentData().currentPlayer;

@@ -180,12 +180,12 @@ Game = {
             oathInvoked = true;
         }
         
-        if(oathInvoked || _.contains(game.usedWords, word)) {
+        if(!oathInvoked && _.contains(game.usedWords, word)) {
             Game.log(game, 'Word \'' + word + '\' has already been played.');
             return game;
         }
         
-        if(oathInvoked || word.length < 3) {
+        if(!oathInvoked && word.length < 3) {
             Game.log(game, 'Word \'' + word + '\' is too short');
             return game;
         }
@@ -195,7 +195,7 @@ Game = {
             return game;
         }
         
-        if(oathInvoked || (Dictionary && game.options.wordMode == Game.wordMode.DICTIONARY && !Dictionary[word])) {
+        if(!oathInvoked && (Dictionary && game.options.wordMode == Game.wordMode.DICTIONARY && !Dictionary[word])) {
             Game.log(game, '\'' + word + '\' is not a word');
             return game;
         }
@@ -244,7 +244,7 @@ Game = {
         });
         
         if(remainingPlayers.length == 1) {
-            Game.log(game, 'Game is over.  Winner is #' + player.seatNumber);
+            Game.log(game, 'Game is over.  Winner is #' + remainingPlayers[0].seatNumber);
             game.currentPlayer = null;
         } else {
             game.currentPlayer = (game.currentPlayer+1) % game.players.length;
