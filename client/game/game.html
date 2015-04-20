@@ -53,7 +53,7 @@
                                     <div class="ui row">
                                         <div class="ui eight wide column">
                                             <div class="ui right labeled massive input">
-                                                <input id="word" class="{{#if validCandidate}}valid{{else}}invalid{{/if}}" type="text" placeholder="Enter Word" autofocus="autofocus">
+                                                <input id="word" value="{{candidate}}" class="{{#if validCandidate}}valid{{else}}invalid{{/if}}" type="text" placeholder="Enter Word" autofocus="autofocus">
                                                 <div class="ui label">
                                                     {{candidateScore}}
                                                 </div>
@@ -153,7 +153,7 @@
 <template name="handLetters">
     {{#each myHand}}
         <div class="ui two wide column">
-            <div id="letter" class="ui segment">
+            <div id="letter" class="ui segment {{#if used}}used{{/if}}">
                 <h1 class="ui header">{{letter}}<sub>{{value}}</sub></h1>
             </div>
         </div>

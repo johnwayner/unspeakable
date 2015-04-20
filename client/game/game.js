@@ -23,6 +23,9 @@ Template.game.helpers({
     'myTurn': function() {
         return this.currentPlayer>=0 && (playerInGame(this).seatNumber == this.currentPlayer);
     },
+    'candidate': function() {
+        return Session.get('candidate');
+    },
     'candidateScore': function() {
         return Session.get('candidateScore') || 0;
     },
@@ -63,21 +66,33 @@ Template.game.events({
     'click #submitWord': function(event, template) {
         Meteor.call('submitWord', this._id, template.$('#word').val());
         Session.set('candidateScore', null);
+        Session.set('candidate', null);
         template.$('#word').val('');
     },
     'click #discardHand': function(event, template) {
         Meteor.call('discardHand', this._id);
         Session.set('candidateScore', null);
+        Session.set('candidate', null);
         template.$('#word').val('');
     }
 });
 
 Template.handLetters.helpers({
     'myHand': function() {
+        var candidate = Session.get('candidate');
+        var candidateLetters = candidate ? candidate.toUpperCase().split('') : [];
+        
         return _.map(playerInGame(this).hand, function(letter) {
+            var index = _.indexOf(candidateLetters, letter);
+            var used = false;
+            if(index >= 0) {
+                candidateLetters.splice(index, 1);
+                used = true;
+            }
             return {
                 letter: letter,
-                value: Game.letterValue(letter)
+                value: Game.letterValue(letter),
+                used: used
             }  
         });
     }
@@ -86,10 +101,25 @@ Template.handLetters.helpers({
 Template.handLetters.events({
     'click #letter': function(event, template) {
         var wordInput = $('#word');
-        var word = wordInput.val() + this.letter;
-        wordInput.val(word);
-        Session.set('candidate', word);
-        Session.set('candidateScore', Game.scoreWord(word));
+        var candidate = wordInput.val();
+        var startWordVal = candidate ? candidate.toUpperCase() : '';
+        
+        if(this.used) {
+            var wordLetters = startWordVal.split('');
+            wordLetters.reverse();
+            var index = wordLetters.indexOf(this.letter);
+            wordLetters.splice(index, 1);
+            wordLetters.reverse();
+            wordInput.val(wordLetters.join(''));
+        } else {
+            var word = startWordVal + this.letter;
+            wordInput.val(word);
+        }
+
+        var newWordValue = wordInput.val();
+        Session.set('candidate', newWordValue);
+        Session.set('candidateScore', Game.scoreWord(newWordValue));
+
     }
 });
 
