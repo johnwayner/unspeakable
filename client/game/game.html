@@ -135,6 +135,13 @@
             {{/each}}
             <span>{{totems}} Lives</span>
         </div>
+        <div class="extra content">
+            <span>Average Roll: {{averageRoll}}</span>
+            <span class="right floated" title="Total of all rolls divided by score.">
+                Efficiency: {{efficiency}}
+            </span>
+
+        </div>
         {{#if isSittingHere}}
             <a id="leaveGame" class="ui bottom attached button">
                 <i class="subtract icon"></i>

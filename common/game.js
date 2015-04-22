@@ -52,6 +52,8 @@ Game = {
             totems: 5,
             hand: cards,
             score: 0,
+            rollCount: 0,
+            rollTotal: 0,
             plays: [] //{word: '', value: 10, roll: 15}
         }
         
@@ -217,6 +219,9 @@ Game = {
         
         var sanityRoll = Game.rollDie(20);
         Game.log(game, 'Player rolled ' + sanityRoll + ' for sanity.');
+        
+        player.rollCount++;
+        player.rollTotal += sanityRoll;
         
         if(sanityRoll < score && sanityRoll != 20) {
             player.totems--;

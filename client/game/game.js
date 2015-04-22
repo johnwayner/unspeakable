@@ -142,6 +142,21 @@ Template.gamePlayer.helpers({
                 class: ((x >= player.totems) ? 'empty ' : '') + 'heart icon '
             };
         });
+    },
+    averageRoll: function() {
+        if(this.rollCount) {
+            return (this.rollTotal / this.rollCount).toFixed(1);
+        } else {
+            return 0;
+        }
+    },
+    
+    efficiency: function() {
+        if(this.rollCount) {
+            return (this.score / this.rollTotal).toFixed(3);
+        } else {
+            return 0;
+        }
     }
 });
 
