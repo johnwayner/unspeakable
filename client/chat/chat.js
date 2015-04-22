@@ -11,6 +11,14 @@ Template.chat.helpers({
         }
         
         return '';
+    },
+    
+    'chat': function() {
+        return _.map(this.chat, function(m) {
+            return _.extend(m, {
+                _id: m.timestamp
+            });
+        })
     }
 });
 
@@ -26,17 +34,13 @@ Template.chat.events({
     }
 });
 
-//Template.chat.onRendered(function() {
-//    var template = this;
-//    var container = template.find('.ui.comments');
-//    container._uihooks = {
-//        insertElement: function(node, next) {
-//            $(node).insertBefore(next);
-//            Meteor.setTimeout(function() {
-//                var $comment = template.$('.comment.highlight');
-//                console.log($comment);
-//                $comment.effect('highlight', {}, 5000, null, false);
-//            }, 500);
-//        }
-//    };
-//});
+Template.chat.onRendered(function() {
+    var template = this;
+    var container = template.find('.ui.comments');
+    container._uihooks = {
+        insertElement: function(node, next) {
+            $(node).insertBefore(next);
+            $(node).effect('highlight', {}, 5000, null, false);
+        }
+    };
+});

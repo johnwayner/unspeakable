@@ -67,11 +67,13 @@ Meteor.methods({
     },
     
     'sendChat': function(gameId, message) {
-        var game = Games.findOne(gameId);
-        if(!game.chat) {
-            game.chat = [];
+        if(_.size(message) > 0) {
+            var game = Games.findOne(gameId);
+            if (!game.chat) {
+                game.chat = [];
+            }
+            game.chat.unshift({timestamp: Date.now(), userId: Meteor.userId(), message: message});
+            Games.update({_id: game._id}, game);
         }
-        game.chat.unshift({timestamp: Date.now(), userId: Meteor.userId(), message: message});
-        Games.update({_id: game._id}, game);
     }
 });

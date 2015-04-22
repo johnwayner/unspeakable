@@ -8,21 +8,25 @@
             </div>
         </form>
       {{#each chat}}
-          <div class="comment {{ageClass}}">
-              <a class="avatar">
-                  <img id="icon{{userId}}" width=100 height=100 src="{{identicon userId}}">
-              </a>
-              <div class="content">
-                  <a class="author">{{userId}}</a>
-                  <div class="metadata">
-                      <span class="date" title="{{formatTime timestamp}}">{{fromNow timestamp}}</span>
-                  </div>
-                  <div class="text">
-                      {{message}}
-                  </div>
-              </div>
-          </div>
+          {{> chatMessage}}
       {{/each}}
     </div>
     
+</template>
+
+<template name="chatMessage">
+    <div class="comment">
+        <a class="avatar">
+            <img id="icon{{userId}}" width=100 height=100 src="{{identicon userId}}">
+        </a>
+        <div class="content">
+            <a class="author">{{userId}}</a>
+            <div class="metadata">
+                <span class="date" title="{{formatTime timestamp}}">{{fromNow timestamp}}</span>
+            </div>
+            <div class="text">
+                <span>{{message}}</span>
+            </div>
+        </div>
+    </div>
 </template>

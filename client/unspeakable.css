@@ -25,3 +25,7 @@ div.card.currentPlayer.me
 #letter.used {
     background-color: lightblue;
 }
+
+.ui.comments .comment {
+    min-height: 35px;
+}
